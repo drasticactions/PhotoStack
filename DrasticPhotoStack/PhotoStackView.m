@@ -305,6 +305,8 @@ static CGFloat const PhotoRotationOffsetDefault = 4.0f;
 }
 
 -(UIView *)topPhoto {
+    if(self.subviews.count == 0)
+            return nil;
     return [self.subviews objectAtIndex:[self.subviews count]-1];
 }
 
@@ -397,7 +399,10 @@ static CGFloat const PhotoRotationOffsetDefault = 4.0f;
     
     // Add Pan Gesture
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(photoPanned:)];
+#if TARGET_OS_TV
+#else
     [panGesture setMaximumNumberOfTouches:1];
+#endif
     panGesture.delegate = self;
     [self addGestureRecognizer:panGesture];
     
